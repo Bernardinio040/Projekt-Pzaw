@@ -1,31 +1,31 @@
 @startuml
 object photo{
- *id - int
- *src - varchar(100)
- *content_type - varchar(10)
- *album_id - int
+ *id:int
+ *src:varchar(100)
+ *content_type:varchar(10)
+ *album_id:int
 }
 
 object album{
- *id - int
- *name - varchar(100)
- *category - varchar(100)
+ *id:int
+ *name:varchar(100)
+ *category:varchar(100)
 }
 
 object comment{
- *id - int
- *content - text
- *photo_id - int
+ *id:int
+ *content:text
+ *photo_id:int
 }
 
 object metadata{
- *id - int
- *exposure_time - varchar(6)
- *aperture - double
- *iso - int
- *focal_lenght - shortint
- *date_time - datetime
- *photo_id - int
+ *id:int
+ *exposure_time:varchar(6)
+ *aperture:double
+ *iso:int
+ *focal_length:shortint
+ *date_time:datetime
+ *photo_id:int
 }
 
 photo }|-- album
