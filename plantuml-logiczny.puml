@@ -1,0 +1,34 @@
+@startuml
+object photo{
+ *id - number
+ *src - text
+ *content_type - text
+ *album_id - number
+}
+
+object album{
+ *id - number
+ *name - text
+ *category - text
+}
+
+object comment{
+ *id - number
+ *content - text
+ *photo_id - number
+}
+
+object metadata{
+ *id - number
+ *exposure_time - text
+ *aperture - number
+ *iso - number
+ *focal_lenght - number
+ *date_time - date
+ *photo_id - number
+}
+
+photo }|-- album
+comment }|-- photo
+metadata |o-- photo
+@enduml

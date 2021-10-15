@@ -1,0 +1,13 @@
+@startuml
+object photo
+
+object album
+
+object comment
+
+object metadata
+
+photo }|-- album
+comment }|-- photo
+metadata |o-- photo
+@enduml
