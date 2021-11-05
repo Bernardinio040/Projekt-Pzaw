@@ -35,3 +35,15 @@ CREATE TABLE `photo` (
   `album_id` int(11) NOT NULL,
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+
+ALTER TABLE `comment` ADD INDEX( `photos_id`);
+ALTER TABLE `metadata` ADD INDEX( `photos_id`);
+ALTER TABLE `photo` ADD INDEX( `album_id`);
+
+ALTER TABLE `album`
+  ADD CONSTRAINT `album_ibfk_1` FOREIGN KEY (`id`) REFERENCES `photo` (`album_id`);
+ALTER TABLE `metadata`
+  ADD CONSTRAINT `metadata_ibfk_1` FOREIGN KEY (`photos_id`) REFERENCES `photo` (`id`);
+ALTER TABLE `photo`
+  ADD CONSTRAINT `photo_ibfk_1` FOREIGN KEY (`id`) REFERENCES `comment` (`photos_id`);
+COMMIT;
