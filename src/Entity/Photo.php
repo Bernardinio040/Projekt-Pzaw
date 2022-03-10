@@ -2,29 +2,51 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
-use App\Repository\PhotoRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
+use ApiPlatform\Core\Annotation\ApiResource;
 
-#[ORM\Entity(repositoryClass: PhotoRepository::class)]
-#[ApiResource]
+/**
+ * Photo
+ *
+ * @ORM\Table(name="photo", indexes={@ORM\Index(name="album_id", columns={"album_id"})})
+ * @ORM\Entity
+ * @ApiResource()
+ */
 class Photo
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
     private $id;
 
-    #[ORM\Column(type: 'string', length: 100)]
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="src", type="string", length=100, nullable=false)
+     */
     private $src;
 
-    #[ORM\Column(type: 'string', length: 10)]
-    private $content_type;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="content_type", type="string", length=10, nullable=false)
+     */
+    private $contentType;
 
-    #[ORM\Column(type: 'integer')]
-    private $album_id;
-
-    #[ORM\ManyToOne(targetEntity: Album::class, inversedBy: 'photos')]
+    /**
+     * @var \Album
+     *
+     * @ORM\ManyToOne(targetEntity="Album")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="album_id", referencedColumnName="id")
+     * })
+     */
     private $album;
 
     public function getId(): ?int
@@ -46,24 +68,12 @@ class Photo
 
     public function getContentType(): ?string
     {
-        return $this->content_type;
+        return $this->contentType;
     }
 
-    public function setContentType(string $content_type): self
+    public function setContentType(string $contentType): self
     {
-        $this->content_type = $content_type;
-
-        return $this;
-    }
-
-    public function getAlbumId(): ?int
-    {
-        return $this->album_id;
-    }
-
-    public function setAlbumId(int $album_id): self
-    {
-        $this->album_id = $album_id;
+        $this->contentType = $contentType;
 
         return $this;
     }
@@ -79,4 +89,6 @@ class Photo
 
         return $this;
     }
+
+
 }
