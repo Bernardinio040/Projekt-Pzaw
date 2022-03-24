@@ -2,36 +2,54 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
-use App\Repository\AlbumRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
+use ApiPlatform\Core\Annotation\ApiResource;
+use App\Controller\PostAPhoto;
 
-#[ORM\Entity(repositoryClass: AlbumRepository::class)]
-#[ApiResource]
+/**
+ * Album
+ *
+ * @ORM\Table(name="album")
+ * @ORM\Entity
+ * @ApiResource(
+ *     normalizationContext={"groups" = {"read"}},
+ *     denormalizationContext={"groups" = {"write"}},
+ *     itemOperations = {
+ *         "post_a_photo" = {
+ *              "method" = "POST",
+ *              "path" = "/album/{album_id}",
+ *              "controller" = PostAPhoto::class,
+ *              "read" = false,
+ *          },
+ *     }
+ * )
+ */
 class Album
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
     private $id;
 
-    #[ORM\Column(type: 'string', length: 100)]
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=100, nullable=false)
+     */
     private $name;
 
-    #[ORM\Column(type: 'string', length: 100)]
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="category", type="string", length=100, nullable=false)
+     */
     private $category;
-
-    #[ORM\OneToMany(mappedBy: 'album', targetEntity: Photo::class)]
-    private $photos;
-    //trzeba cos zrobic aby mozna bylo dodac pusty album
-    //+ moze sproboj zrobic encje na podstawie bazy adnych (link na grupie pzaw dsc)
-
-    public function __construct()
-    {
-        $this->photos = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -62,33 +80,5 @@ class Album
         return $this;
     }
 
-    /**
-     * @return Collection<int, Photo>
-     */
-    public function getPhotos(): Collection
-    {
-        return $this->photos;
-    }
 
-    public function addPhoto(Photo $photo): self
-    {
-        if (!$this->photos->contains($photo)) {
-            $this->photos[] = $photo;
-            $photo->setAlbum($this);
-        }
-
-        return $this;
-    }
-
-    public function removePhoto(Photo $photo): self
-    {
-        if ($this->photos->removeElement($photo)) {
-            // set the owning side to null (unless already changed)
-            if ($photo->getAlbum() === $this) {
-                $photo->setAlbum(null);
-            }
-        }
-
-        return $this;
-    }
 }
