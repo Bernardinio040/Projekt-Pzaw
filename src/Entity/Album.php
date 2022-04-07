@@ -15,17 +15,11 @@ use App\Controller\PostAPhoto;
  * @ORM\Entity
  * @ApiResource(
  *     normalizationContext={"groups" = {"read"}},
- *     denormalizationContext={"groups" = {"write"}},
- *     itemOperations = {
- *         "post_a_photo" = {
- *              "method" = "POST",
- *              "path" = "/album/{album_id}",
- *              "controller" = PostAPhoto::class,
- *              "read" = false,
- *          },
- *     }
+ *     formats: ["json"],
+ *     denormalizationContext={"groups" = {"write"}}
  * )
  */
+
 class Album
 {
     /**
@@ -34,13 +28,16 @@ class Album
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Groups("read")
      */
+
     private $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=100, nullable=false)
+     * @Groups({"read", "write"})
      */
     private $name;
 
@@ -48,8 +45,15 @@ class Album
      * @var string
      *
      * @ORM\Column(name="category", type="string", length=100, nullable=false)
+     * @Groups({"read", "write"})
      */
     private $category;
+
+    /**
+     * @Groups("read")
+     * @ORM\Column(name="created_at", type="datetime_immutable", options={"default": "CURRENT_TIMESTAMP"})
+     */
+    private $createdAt;
 
     public function getId(): ?int
     {
