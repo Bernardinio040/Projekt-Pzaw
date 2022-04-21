@@ -6,16 +6,14 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use ApiPlatform\Core\Annotation\ApiResource;
-use App\Controller\PostAPhoto;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * Album
- *
  * @ORM\Table(name="album")
  * @ORM\Entity
  * @ApiResource(
  *     normalizationContext={"groups" = {"read"}},
- *     formats: ["json"],
+ *     
  *     denormalizationContext={"groups" = {"write"}}
  * )
  */
@@ -25,10 +23,10 @@ class Album
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer", nullable="false")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @Groups("read")
+     * 
      */
 
     private $id;
@@ -36,7 +34,7 @@ class Album
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=100, nullable=false)
+     * @ORM\Column(name="name", type="string", length="100", nullable="false")
      * @Groups({"read", "write"})
      */
     private $name;
@@ -44,7 +42,7 @@ class Album
     /**
      * @var string
      *
-     * @ORM\Column(name="category", type="string", length=100, nullable=false)
+     * @ORM\Column(name="category", type="string", length="100", nullable="false")
      * @Groups({"read", "write"})
      */
     private $category;
@@ -79,7 +77,7 @@ class Album
 
     public function setCategory(string $category): self
     {
-        $this->category = $category;
+        //$this->category = $category;
 
         return $this;
     }

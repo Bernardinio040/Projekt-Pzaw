@@ -6,7 +6,6 @@
 parameters:
 
 services:
-    'App\Transformer\ImageInputTransformer': ~
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
