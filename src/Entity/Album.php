@@ -13,7 +13,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ORM\Entity
  * @ApiResource(
  *     normalizationContext={"groups" = {"read"}},
- *     
+ *     formats={"json"},
  *     denormalizationContext={"groups" = {"write"}}
  * )
  */
@@ -26,6 +26,7 @@ class Album
      * @ORM\Column(name="id", type="integer", nullable="false")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Groups("read")
      * 
      */
 
@@ -77,7 +78,7 @@ class Album
 
     public function setCategory(string $category): self
     {
-        //$this->category = $category;
+        $this->category = $category;
 
         return $this;
     }

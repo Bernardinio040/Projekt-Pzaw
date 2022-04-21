@@ -6,13 +6,18 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
+use App\Model\ImageInput;
 
 /**
  * Photo
  *
  * @ORM\Table(name="photo", indexes={@ORM\Index(name="album_id", columns={"album_id"})})
  * @ORM\Entity
- * @ApiResource()
+ * @ApiResource(
+ *     formats={"json"},
+ *     input=ImageInput::CLASS
+ * )
  */
 class Photo
 {
