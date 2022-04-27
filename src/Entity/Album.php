@@ -48,11 +48,11 @@ class Album
      */
     private $category;
 
-    /**
-     * @Groups("read")
-     * @ORM\Column(name="created_at", type="datetime_immutable", options={"default": "CURRENT_TIMESTAMP"})
-     */
-    private $createdAt;
+//    /**
+//     * @Groups("read")
+//     * @ORM\Column(name="created_at", type="datetime_immutable", options={"default": "CURRENT_TIMESTAMP"})
+//     */
+//    private $createdAt;
 
     public function getId(): ?int
     {
