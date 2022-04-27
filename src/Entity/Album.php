@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\AlbumRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use ApiPlatform\Core\Annotation\ApiResource;
@@ -10,7 +11,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Table(name="album")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass=AlbumRepository::class)
  * @ApiResource(
  *     normalizationContext={"groups" = {"read"}},
  *     formats={"json"},
