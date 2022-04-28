@@ -9,6 +9,7 @@ use App\Entity\Photo;
 use App\Model\ImageInput;
 use App\Service\FileService;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Model\GalleryFile;
 
 class ImageInputTransformer implements DataTransformerInterface {
 
@@ -50,9 +51,12 @@ class ImageInputTransformer implements DataTransformerInterface {
         }
 
         $photo->setAlbum($album);
-        $photo->setContentType($object->getContentType());
 
-        $photo->setSrc($this->fileService->convertToFile($object->getImageContent()));
+        /** @var GalleryFile $galleryFile */
+        $galleryFile = $this->fileService->convertToFile($object->getImageContent());
+
+        $photo->setSrc($galleryFile->getFileEndpointPath());
+        $photo->setContentType($this->fileService->getContentType($galleryFile->getFilePath()));
 
         return $photo;
 

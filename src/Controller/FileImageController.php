@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route(path: "/image/{imageName}", name: "file_controller")]
+#[Route(path: "/api/image/{imageName}", name: "file_controller")]
 class FileImageController extends AbstractController {
     public function __invoke($imageName)
     {
